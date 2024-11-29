@@ -24,7 +24,7 @@
         rum/rum                        {:mvn/version "0.12.11"
                                         :exclusions [cljsjs/react cljsjs/react-dom]}
        com.biffweb/config              {:git/url "https://github.com/biut-explorations/oi-biff"
-                                        :git/sha "43b0f2f5da5cf7568b8b830cb0b827bbf14949e0"
+                                        :git/sha "206d794f7d706a36604fc66c76592ca2b3cf40d2"
                                         :deps/root "libs/config"}
         ;; deprecated
         hawk/hawk                      {:mvn/version "0.2.11"}}
