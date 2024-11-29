@@ -1,13 +1,13 @@
 # The default deploy instructions (https://biffweb.com/docs/reference/production/) don't
 # use Docker, but this file is provided in case you'd like to deploy with containers.
 #
-# When running the container, make sure you set any environment variables defined in config.env,
+# When running the container, make sure you set any environment variables defined in ee-config.env,
 # e.g. using whatever tools your deployment platform provides for setting environment variables.
 #
 # Run these commands to test this file locally:
 #
 #   docker build -t your-app .
-#   docker run --rm -e BIFF_PROFILE=dev -v $PWD/config.env:/app/config.env your-app
+#   docker run --rm -e BIFF_PROFILE=dev -v $PWD/ee-config.env:/app/ee-config.env your-app
 
 # This is the base builder image, construct the jar file in this one
 # it uses alpine for a small image

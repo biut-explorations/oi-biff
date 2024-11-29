@@ -1,5 +1,5 @@
 ;; See https://github.com/juxt/aero and https://biffweb.com/docs/api/utilities/#use-aero-config.
-;; #biff/env and #biff/secret will load values from the environment and from config.env.
+;; #biff/env and #biff/secret will load values from the environment and from ee-config.env.
 {:biff/base-url #profile {:prod #join ["https://" #biff/env DOMAIN]
                           :default #join ["http://localhost:" #ref [:biff/port]]}
  :biff/host     #or [#biff/env "HOST"
@@ -41,7 +41,7 @@
  :biff.tasks/generate-assets-fn     com.example/generate-assets!
  :biff.tasks/css-output             "target/resources/public/css/main.css"
  :biff.tasks/deploy-untracked-files [#ref [:biff.tasks/css-output]
-                                     "config.env"]
+                                     "ee-config.env"]
 
  ;; `clj -M:dev prod-dev` will run the soft-deploy task whenever files in these directories are changed.
  :biff.tasks/watch-dirs             ["src" "dev" "resources" "test"]

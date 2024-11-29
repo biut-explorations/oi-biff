@@ -78,7 +78,7 @@
   (println (:text form-params))
   (println)
   (println "To send emails instead of printing them to the console, add your"
-           "API keys for MailerSend and Recaptcha to config.env.")
+           "API keys for MailerSend and Recaptcha to ee-config.env.")
   true)
 
 (defn send-email [{:keys [biff/secret recaptcha/site-key] :as ctx} opts]

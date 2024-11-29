@@ -55,7 +55,7 @@
 
 (comment
   ;; Call this function if you make a change to main/initial-system,
-  ;; main/components, :tasks, :queues, config.env, or deps.edn.
+  ;; main/components, :tasks, :queues, ee-config.env, or deps.edn.
   (main/refresh)
 
   ;; Call this in dev if you'd like to add some seed data to your database. If

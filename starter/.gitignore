@@ -3,7 +3,7 @@
 /bin
 /config.edn
 /config.sh
-/config.env
+/ee-config.env
 /node_modules
 /secrets.env
 /storage/
