@@ -73,7 +73,7 @@
                  (System/getProperties))]))
 
 (defn use-aero-config [{:biff.config/keys [skip-validation profile] :as ctx}]
-  (println "in use-aero-config")
+  (println "in use-aero-config in oi")
   (let [env (get-env)
         profile (some-> (or profile
                             (get env "BIFF_PROFILE")
@@ -84,7 +84,7 @@
         secret (fn [k]
                  (some-> (get ctx k) (.invoke)))
         ctx (assoc ctx :biff/secret secret)]
-    (println "inside let in use-aero-config")
+    (println "inside let in use-aero-config in oi")
     (println (str "env: " env))
     (println (str "ctx: " ctx))
     (println (str "cookie-secret: " (secret :biff.middleware/cookie-secret)))
