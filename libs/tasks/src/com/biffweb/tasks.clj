@@ -139,8 +139,8 @@
                    distinct
                    (concat deploy-untracked-files)
                    (filter fs/exists?))]
-    (when (and (not (windows?)) (fs/exists? "ee-config.env"))
-      (fs/set-posix-file-permissions "ee-config.env" "rw-------"))
+    (when (and (not (windows?)) (fs/exists? "oi-config.env"))
+      (fs/set-posix-file-permissions "oi-config.env" "rw-------"))
     (->> (concat ["rsync" "--archive" "--verbose" "--relative" "--include='**.gitignore'"
                   "--exclude='/.git'" "--filter=:- .gitignore" "--delete-after" "--protocol=29"]
                  files
@@ -302,7 +302,7 @@
       (io/make-parents "target/resources/_")
       (shell "clj" "-M:dev" "dev"))
     (let [{:keys [biff.tasks/main-ns biff.nrepl/port] :as ctx} @config]
-      (when-not (fs/exists? "ee-config.env")
+      (when-not (fs/exists? "oi-config.env")
         (run-task "generate-config"))
       (when (fs/exists? "package.json")
         (shell (install-js-deps-cmd)))
@@ -348,28 +348,28 @@
     (println (str "Test with `BIFF_PROFILE=dev java -jar " uber-file "`"))))
 
 (defn generate-secrets
-  "Prints new secrets to put in ee-config.env."
+  "Prints new secrets to put in oi-config.env."
   []
-  (println "Put these in your ee-config.env file:")
+  (println "Put these in your oi-config.env file:")
   (println)
   (println (str "COOKIE_SECRET=" (new-secret 16)))
   (println (str "JWT_SECRET=" (new-secret 32)))
   (println))
 
 (defn generate-config
-  "Creates a new ee-config.env file if one doesn't already exist."
+  "Creates a new oi-config.env file if one doesn't already exist."
   []
-  (if (fs/exists? "ee-config.env")
+  (if (fs/exists? "oi-config.env")
     (binding [*out* *err*]
-      (println "ee-config.env already exists. If you want to generate a new file, run `mv ee-config.env ee-config.env.backup` first.")
+      (println "oi-config.env already exists. If you want to generate a new file, run `mv oi-config.env oi-config.env.backup` first.")
       (System/exit 3))
     (let [contents (slurp (io/resource "config.template.env"))
           contents (str/replace contents
                                 #"\{\{\s+new-secret\s+(\d+)\s+\}\}"
                                 (fn [[_ n]]
                                   (new-secret (parse-long n))))]
-      (spit "ee-config.env" contents)
-      (println "New config generated and written to ee-config.env."))))
+      (spit "oi-config.env" contents)
+      (println "New config generated and written to oi-config.env."))))
 
 (defn restart
   "Restarts the app process via `systemctl restart app` (on the server)."

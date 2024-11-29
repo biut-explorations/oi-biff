@@ -76,14 +76,14 @@
    #biff/env and #biff/secret.
 
    #biff/env is like #env, but environment variables can also be specified in an
-   optional ee-config.env file (read from the filesystem, not from resources) and
+   optional oi-config.env file (read from the filesystem, not from resources) and
    in the system properties (variable names should be prefixed with biff.env,
    e.g biff.env.BIFF_PROFILE). If values are defined in multiple places,
    precedence is as follows:
 
      1. System properties
      2. Actual environment variables
-     3. ee-config.env
+     3. oi-config.env
 
    The :profile value for Aero is also taken from these sources, in the
    BIFF_PROFILE key (e.g. `BIFF_PROFILE=prod` -- the value is converted to a
@@ -310,7 +310,7 @@
   EXAMPLES
   ========
 
-  # ee-config.env
+  # oi-config.env
   S3_SECRET_KEY=\"your-secret-key\"
 
   ;; resources/config.edn

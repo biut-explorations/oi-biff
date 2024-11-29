@@ -63,7 +63,7 @@
 (defn get-env []
   (reduce into
           {}
-          [(some->> (catchall (slurp "ee-config.env"))
+          [(some->> (catchall (slurp "oi-config.env"))
                     str/split-lines
                     (keep parse-env-var))
            (System/getenv)
@@ -87,7 +87,7 @@
                   (and (secret :biff.middleware/cookie-secret)
                        (secret :biff/jwt-secret)))
       (binding [*out* *err*]
-        (println "Secrets are missing. Make sure you have a ee-config.env file in the current "
+        (println "Secrets are missing. Make sure you have a oi-config.env file in the current "
                   "directory, or set config via environment variables.")
         (System/exit 1)))
     (doseq [[k v] (select-ns-as ctx 'biff.system-properties nil)]

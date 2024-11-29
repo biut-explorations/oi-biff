@@ -217,8 +217,8 @@
                           "set -a"
                           (when (fs/exists? "secrets.env")
                             ". ./secrets.env")
-                          (when (fs/exists? "ee-config.env")
-                            ". ./ee-config.env")
+                          (when (fs/exists? "oi-config.env")
+                            ". ./oi-config.env")
                           (->> (run-args)
                                (map shell-escape)
                                (str/join " ")
@@ -253,14 +253,14 @@
    (parse-env-var "   ")])
 
 (defn secrets []
-  (let [config-file (first (filter fs/exists? ["ee-config.env" "secrets.env"]))]
+  (let [config-file (first (filter fs/exists? ["oi-config.env" "secrets.env"]))]
     (cond
       (nil? config-file)
       nil
 
       (and (not (windows?))
            ;; Backwards compatibility--just in case someone was relying on fancy behavior in secrets.env. Problem with
-           ;; doing this for ee-config.env is it doesn't work if you don't have `export` on every line.
+           ;; doing this for oi-config.env is it doesn't work if you don't have `export` on every line.
            (= config-file "secrets.env"))
       (get-env-from (str ". ./" config-file))
 
@@ -325,15 +325,15 @@
                    distinct
                    (concat ["config.edn"
                             "secrets.env"
-                            "ee-config.env"
+                            "oi-config.env"
                             css-output])
                    (filter fs/exists?))]
     (when-not (windows?)
       (fs/set-posix-file-permissions "config.edn" "rw-------")
       (when (fs/exists? "secrets.env")
         (fs/set-posix-file-permissions "secrets.env" "rw-------"))
-      (when (fs/exists? "ee-config.env")
-        (fs/set-posix-file-permissions "ee-config.env" "rw-------"))
+      (when (fs/exists? "oi-config.env")
+        (fs/set-posix-file-permissions "oi-config.env" "rw-------"))
       )
     (->> (concat ["rsync" "--archive" "--verbose" "--relative" "--include='**.gitignore'"
                   "--exclude='/.git'" "--filter=:- .gitignore" "--delete-after" "--protocol=29"]
@@ -345,7 +345,7 @@
   (let [{:biff.tasks/keys [server deploy-to deploy-from deploy-cmd]} @config]
     (apply shell (concat ["scp" "config.edn"]
                          (when (fs/exists? "secrets.env") ["secrets.env"])
-                         (when (fs/exists? "ee-config.env") ["ee-config.env"])
+                         (when (fs/exists? "oi-config.env") ["oi-config.env"])
                          [(str "app@" server ":")]))
     (when (fs/exists? css-output)
       (shell "ssh" (str "app@" server) "mkdir" "-p" "target/resources/public/css/")
@@ -378,7 +378,7 @@
 (defn deploy
   "Pushes code to the server and restarts the app.
 
-  Uploads config (config.edn, secrets.env and/or ee-config.env) and code to the server, using
+  Uploads config (config.edn, secrets.env and/or oi-config.env) and code to the server, using
   `rsync` if it's available, and `git push` by default otherwise. Then restarts
   the app.
 
